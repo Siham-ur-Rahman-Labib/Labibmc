@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Hacker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #00FF00;
+            padding: 30px;
+        }
+        .hidden {
+            display: none;
+        }
+        .step {
+            margin-bottom: 10px;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Game Hacking</h1>
+
+    <div id="step1" class="step">
+        <p>Which game to Inject?</p>
+        <select id="game-select">
+            <option value="Minecraft">Minecraft</option>
+            <option value="Roblox">Roblox</option>
+            <option value="Free Fire">Free Fire</option>
+            <option value="PUBG">PUBG</option>
+            <option value="Call of Duty">Call of Duty</option>
+            <option value="Brawl Stars">Brawl Stars</option>
+            <option value="Stumble Guys">Stumble Guys</option>
+            <option value="Township">Township</option>
+            <option value="Clash of Clans">Clash of Clans</option>
+        </select>
+        <button onclick="nextStep('step2')">Next</button>
+    </div>
+
+    <div id="step2" class="step hidden">
+        <p id="game-display"></p>
+        <p>Enter your Gamertag:</p>
+        <input type="text" id="gamer-tag">
+        <button onclick="nextStep('step3')">Next</button>
+    </div>
+
+    <div id="step3" class="step hidden">
+        <p>What is your Platform?</p>
+        <select id="os-select">
+            <option value="Android">Android (stil under Dev)</option>
+            <option value="iOS">iOS</option>
+            <option value="Windows 10">Windows 10</option>
+            <option value="Windows 11">Windows 11</option>
+            <option value="iMac">iMac</option>
+        </select>
+        <button onclick="nextStep('step4')">Next</button>
+    </div>
+
+    <div id="step4" class="step hidden">
+        <p id="os-display"></p>
+        <div id="android-options" class="hidden">
+            <p>What is your Android System?</p>
+            <select id="condition-select">
+                <option value="Root">Root</option>
+                <option value="Without Root">Without Root</option>
+            </select>
+            <p>What is your Device Mode?</p>
+            <select id="arm-select">
+                <option value="32bit">32bit</option>
+                <option value="64bit">64bit</option>
+                <option value="x86">x86</option>
+                <option value="x86_64">x86_64</option>
+            </select>
+            <button onclick="nextStep('step5')">Next</button>
+        </div>
+        <div id="non-android-options" class="hidden">
+            <button onclick="nextStep('step5')">Next</button>
+        </div>
+    </div>
+
+    <div id="step5" class="step hidden">
+        <p>How much currency?</p>
+        <select id="currency-select">
+            <option value="10000">10000</option>
+            <option value="50000">50000</option>
+            <option value="99999">99999</option>
+            <option value="476586">476586</option>
+            <option value="123765">123765</option>
+            <option value="9999999999">9999999999</option>
+        </select>
+        <button onclick="nextStep('step6')">Next</button>
+    </div>
+
+    <div id="step6" class="step hidden">
+        <p>What is your Currency Mode?</p>
+        <select id="currency-mode-select">
+            <option value="Lock">Lock</option>
+            <option value="Default(No Lock)">Default(No Lock)</option>
+        </select>
+        <button onclick="startSimulation()">Start Operation</button>
+    </div>
+
+    <div id="output" class="hidden"></div>
+
+    <script>
+        function nextStep(stepId) {
+            const currentStep = document.querySelector('.step:not(.hidden)');
+            if (currentStep) {
+                currentStep.classList.add('hidden');
+            }
+            document.getElementById(stepId).classList.remove('hidden');
+        }
+
+        function startSimulation() {
+            const game = document.getElementById('game-select').value;
+            const gamerTag = document.getElementById('gamer-tag').value;
+            const os = document.getElementById('os-select').value;
+            const currency = document.getElementById('currency-select').value;
+            const currencyMode = document.getElementById('currency-mode-select').value;
+
+            document.getElementById('output').innerHTML = `
+                <h2>Starting Operation...</h2>
+                <p>Connecting to Labib...</p>
+                <p>Loading Currency...</p>
+                <p>Bypassing Security...</p>
+                <p>Extracting Data...</p>
+                <p>Decrypting Data...</p>
+                <p>Editing Memory...</p>
+                <p>Injecting Codes...</p>
+                <p>Saving Memory...</p>
+                <p>Encrypting Data...</p>
+            `;
+
+            setTimeout(() => {
+                document.getElementById('output').innerHTML += `<p>Sending Data...</p>`;
+                setTimeout(() => {
+                    if (currencyMode === 'Lock') {
+                        document.getElementById('output').innerHTML += `<p>Locking Currency in memory...</p>`;
+                    }
+                    setTimeout(() => {
+                        document.getElementById('output').innerHTML += `<p>Killing Anti-Cheat...</p>`;
+                        setTimeout(() => {
+                            document.getElementById('output').innerHTML += `<p>Anti-Cheat Killed Successfully!</p>`;
+                            setTimeout(() => {
+                                document.getElementById('output').innerHTML += `<p>Killing Ban...</p>`;
+                                setTimeout(() => {
+                                    document.getElementById('output').innerHTML += `<p>Ban Killed! Enjoy your currency!</p>`;
+                                }, 7500);
+                            }, 8500);
+                        }, Math.random() * (2500 - 1000) + 1000);
+                    }, 3000);
+                }, Math.random() * (2500 - 1000) + 1000);
+            }, 2000);
+
+            document.getElementById('output').classList.remove('hidden');
+        }
+
+        document.getElementById('game-select').addEventListener('change', function() {
+            document.getElementById('game-display').textContent = `Gamertag for ${this.value}:`;
+        });
+
+        document.getElementById('os-select').addEventListener('change', function() {
+            if (this.value === 'Android [still under Dev]') {
+                document.getElementById('android-options').classList.remove('hidden');
+                document.getElementById('non-android-options').classList.add('hidden');
+            } else {
+                document.getElementById('android-options').classList.add('hidden');
+                document.getElementById('non-android-options').classList.remove('hidden');
+            }
+            document.getElementById('os-display').textContent = `Platform selected: ${this.value}`;
+        });
+    </script>
+</body>
+</html>
